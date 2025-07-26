@@ -10,5 +10,5 @@ try:
     client.connect(hostname=host, username=user , password=password, timeout=3)
     print(f"the connection was successful with {host}")
 
-except paramiko.AuthenticationException:
+except Exception as e:
     print(f" the connnection was failed with {host}")
