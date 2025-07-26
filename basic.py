@@ -16,12 +16,20 @@ host = args.host
 user = args.user
 wordlist = args.wordlist
 
+words = []
 
 
 
-host = "sciring.in"
-user = "root"
-password = "wrog"
+def words(wordlist):
+    with open(wordlist , 'r' , encoding='utf-8') as f:
+        return[line.strip('\n') for line in f]
+        
+
+
+
+
+
+
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 try:
