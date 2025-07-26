@@ -6,13 +6,13 @@ import argparse
 
 parser = argparse.ArgumentParser(description="Basic SSH Cracker")
 
-parser.add_argument("-h","--host",required=True,type=str,help="Enter the hostname")
+parser.add_argument("-t","--target",required=True,type=str,help="Enter the hostname")
 parser.add_argument("-u","--user",type=str,required=True,help="Enter the username")
 parser.add_argument("-w","--wordlist",type=str,required=True,help="Enter the path to wordlist")
 
 args = parser.parse_args()
 
-host = args.host
+host = args.target
 user = args.user
 wordlist = args.wordlist
 
