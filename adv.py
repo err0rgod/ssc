@@ -149,7 +149,12 @@ def ssh_worker():
 
 
 def ssh_worker():
+    
     while not combo_queue.empty():
+        try:
+            user, password = combo_queue.get_nowait()
+        except:
+            break
         if stop_event.is_set():
             return  # Just exit thread safely, no task_done here yet
 
