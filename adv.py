@@ -146,7 +146,8 @@ def ssh_worker():
             combo_queue.task_done()
 
 '''
-
+truepass = None
+trueuser = None
 
 def ssh_worker():
     
@@ -166,6 +167,8 @@ def ssh_worker():
 
             with result_lock:
                 print(f"✅ SUCCESS 🎉 {user} : {password}")
+                truepass = password
+                trueuser =  user 
                 stop_event.set()
 
             client.close()
@@ -195,3 +198,7 @@ for t in threads:
 
 
 
+print("=====================================================")
+print(f" The SSH Creds Of {host} are :")
+print(f"USER  :   {trueuser}")
+print(f"Password   :   {truepass}")
