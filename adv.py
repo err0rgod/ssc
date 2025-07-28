@@ -131,10 +131,10 @@ def ssh_worker():
 
 
             with result_lock :
-                print(f"Success {user}  :   {password}")
+                print(f"Success 🎉🎉✨✨✨🧨🧨🎇🎇🎎🎍🎍 {user}  :   {password}")
                 stop_event.set()
             
-            client.close()
+                client.close()
 
         except Exception as e:
             with result_lock:

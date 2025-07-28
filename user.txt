@@ -6,6 +6,7 @@ ghost
 sleeper
 slider
 guest
+demo
 123456
 magnos
 333333
