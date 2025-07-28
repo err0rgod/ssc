@@ -128,7 +128,7 @@ def ssh_worker():
 
         except Exception as e:
             with result_lock:
-                print(f" Failure with {host}")
+                print(f" Failure with {host}   :    {user}   :    {password}")
 
         finally:
             combo_queue.task_done()
