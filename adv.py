@@ -5,8 +5,8 @@ import argparse
 from threading import Thread, Lock
 from queue import Queue
 
-combo_queue = ()
-result_lock = ()
+combo_queue = Queue()
+result_lock = Lock()
 
 
 parser = argparse.ArgumentParser(description="Advance SSH Cracker")
