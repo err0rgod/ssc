@@ -7,7 +7,7 @@ from queue import Queue
 
 combo_queue = Queue()
 result_lock = Lock()
-
+stop_event = Event()
 
 parser = argparse.ArgumentParser(description="Advance SSH Cracker")
 
