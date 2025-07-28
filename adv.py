@@ -29,6 +29,15 @@ def check_ssh(ip="steminfinity.in", port=22, timeout=3):
         return False
 
 
+def userb(user):
+    with open(user , 'r' , encoding='utf-8') as f:
+        return[line.strip('\n') for line in f]
+    
+
+
+users = userb(user)
+
+
 def words(passwd):
     with open(passwd , 'r' , encoding='utf-8') as f:
         return[line.strip('\n') for line in f]
