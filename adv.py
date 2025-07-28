@@ -74,8 +74,6 @@ for userc in users:
 
 
 
-
-
 def ssh_worker():
     while not combo_queue.empty():
         user , password =  combo_queue.get()
@@ -96,4 +94,22 @@ def ssh_worker():
 
         finally:
             combo_queue.task_done()
+
+
+
+
+
+threads = []
+
+for _ in range(30):
+    t = Thread(target=ssh_worker)
+    t.start()
+    threads.append(t)
+
+
+
+for t in threads:
+    t.join()
+
+
 
