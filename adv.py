@@ -51,15 +51,16 @@ client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
 
-for password in passwords:
+for userc in users:
+    for password in passwords:
 
-    try:
-        client.connect(hostname=host,username=user, password=password, timeout=3)
-        print(f"connection Success🏀🏀🏀🥎🥎⚾⚾⚽⚽💎💎💍💍💍 with {host}")
+        try:
+            client.connect(hostname=host,username=user, password=password, timeout=3)
+            print(f"connection Success🏀🏀🏀🥎🥎⚾⚾⚽⚽💎💎💍💍💍 with {host}")
 
 
-    except Exception as e:
-        print(f"Connection Failed with {host}")
+        except Exception as e:
+            print(f"Connection Failed with {host}")
 
 
 check_ssh()
