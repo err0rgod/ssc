@@ -1,7 +1,7 @@
 import paramiko
 import argparse
 
-
+import threading
 
 
 parser = argparse.ArgumentParser(description="Basic SSH Cracker")
@@ -9,13 +9,15 @@ parser = argparse.ArgumentParser(description="Basic SSH Cracker")
 parser.add_argument("-t","--target",required=True,type=str,help="Enter the hostname")
 parser.add_argument("-u","--user",type=str,required=True,help="Enter the username")
 parser.add_argument("-w","--wordlist",type=str,required=True,help="Enter the path to wordlist")
+parser.add_argument("-c","--threads",type=str,default=20,help="enter the number of threads. Default : 20")
+
 
 args = parser.parse_args()
 
 host = args.target
 user = args.user
 wordlist = args.wordlist
-
+threads = args.threads
 
 
 
@@ -27,6 +29,15 @@ def words(wordlist):
 
 
 passwords = words(wordlist)
+iter_passwords = iter(passwords)
+event_done = threading.Event()
+
+
+
+
+trueuser = None
+truepasswd = None
+
 
 
 
