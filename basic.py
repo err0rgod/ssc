@@ -50,10 +50,11 @@ def workers():
         
         try:
             client.connect(hostname=host, username=user , password=password, timeout=3)
-            print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
             print("===========================================================================\n")
             print(" The Password was Found and Connection was Success\n")
             print(f"Connect with {host}  as   {user}  :   {password}\n")
+            trueuser = user
+            truepasswd = password
     
             break
         
