@@ -27,10 +27,10 @@ def check_ssh(ip="steminfinity.in", port=22, timeout=3):
     try:
         with socket.create_connection((ip, port), timeout=timeout):
             
-            print("Success")
+            print("Success. The Port is Open")
             return True
     except (socket.timeout, ConnectionRefusedError, OSError):
-        print("Failure")
+        print("Failure. The Port is not open")
         return False
 
 
@@ -186,7 +186,7 @@ def ssh_worker():
 
 threads = []
 
-for _ in range(50):
+for _ in range(100):
     t = Thread(target=ssh_worker)
     t.start()
     threads.append(t)
