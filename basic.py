@@ -59,3 +59,27 @@ def workers():
         
         except Exception as e:
             print(f" the connnection was failed with {host}  ")
+
+
+
+thread_list = []
+for _ in range(threads):
+    t= threading.Thread(target=workers)
+    t.start()
+    thread_list.append(t) 
+
+
+
+for t in thread_list:
+    t.join()
+
+
+
+
+
+print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
+print("===========================================================================\n")
+if trueuser and truepasswd:
+    print(f"\n[+] Found credentials: {trueuser}   :   {truepasswd}\n")
+else:
+    print("\n[-] No valid credentials found.")
